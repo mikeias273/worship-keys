@@ -1,22 +1,32 @@
 const piano = document.getElementById("piano");
 
-const volumePad = new Tone.Volume(-6).toDestination();
+// Volume inicial mais suave
+const volumePad = new Tone.Volume(-18).toDestination();
 
+// Reverb exclusivo do Pad
+const reverbPad = new Tone.Reverb({
+  decay: 5,
+  wet: 0.35
+}).connect(volumePad);
+
+// Timbre Ambient Worship
 const worshipPad = new Tone.PolySynth(
-    Tone.Synth,
-    {
-        oscillator: {
-            type: "sine"
-        },
+  Tone.Synth,
+  {
+    oscillator: {
+      type: "fatsine",
+      count: 3,
+      spread: 12
+    },
 
-        envelope: {
-            attack: 1.2,
-            decay: 0.5,
-            sustain: 0.8,
-            release: 2.5
-        }
+    envelope: {
+      attack: 1.8,
+      decay: 0.8,
+      sustain: 0.65,
+      release: 4
     }
-).connect(volumePad);
+  }
+).connect(reverbPad);
 
 let padAtivado = false;
 
@@ -281,4 +291,53 @@ botaoPararTudo.addEventListener("click", () => {
   grandPiano.releaseAll();
   worshipPad.releaseAll();
   notasMidiAtivas.clear();
+});
+
+// ===== AMBIENT ATMOSPHERE =====
+
+const botaoAtmosfera =
+  document.getElementById("ativarAtmosfera");
+
+const controleAtmosfera =
+  document.getElementById("volumeAtmosfera");
+
+const volumeAtmosfera =
+  new Tone.Volume(-20).toDestination();
+
+const atmosfera = new Tone.Player({
+  url: "sounds/pads/atmosfera.wav",
+  loop: true,
+  fadeIn: 1.5,
+  fadeOut: 1.5
+}).connect(volumeAtmosfera);
+
+let atmosferaLigada = false;
+
+botaoAtmosfera.addEventListener("click", async () => {
+  try {
+    await Tone.start();
+
+    if (!atmosfera.loaded) {
+      botaoAtmosfera.textContent = "Carregando...";
+      await Tone.loaded();
+    }
+
+    if (atmosferaLigada) {
+      atmosfera.stop();
+      atmosferaLigada = false;
+      botaoAtmosfera.textContent = "▶ Ativar atmosfera";
+    } else {
+      atmosfera.start();
+      atmosferaLigada = true;
+      botaoAtmosfera.textContent = "■ Desativar atmosfera";
+    }
+  } catch (erro) {
+    console.error("Erro na atmosfera:", erro);
+    botaoAtmosfera.textContent = "Erro ao carregar áudio";
+  }
+});
+
+controleAtmosfera.addEventListener("input", () => {
+  volumeAtmosfera.volume.value =
+    Number(controleAtmosfera.value);
 });

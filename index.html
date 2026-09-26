@@ -81,9 +81,33 @@
 
 <!-- Nosso teclado virtual -->
 <div id="piano"></div>
-    </main>
 
-    <script src="https://unpkg.com/tone@14.8.49/build/Tone.js"></script>
+</main>
+
+<!-- NOVO CONTROLE DA ATMOSFERA -->
+<div class="controle-atmosfera">
+  <h3>🌌 Ambient Atmosphere</h3>
+
+  <button id="ativarAtmosfera" type="button">
+    ▶ Ativar atmosfera
+  </button>
+
+  <label for="volumeAtmosfera">
+    Volume da atmosfera
+  </label>
+
+  <input
+    id="volumeAtmosfera"
+    type="range"
+    min="-60"
+    max="0"
+    value="-20"
+  >
+</div>
+
+<!-- MANTENHA OS DOIS SCRIPTS QUE JÁ EXISTEM -->
+<script src="https://unpkg.com/tone@14.8.49/build/Tone.js"></script>
 <script src="js/script.js"></script>
+
 </body>
 </html>
