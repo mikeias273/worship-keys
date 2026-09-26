@@ -1,0 +1,217 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #10101c;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.app {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px;
+    text-align: center;
+}
+
+h1 {
+    color: #a78bfa;
+    font-size: 36px;
+}
+
+p {
+    color: #aaa;
+    margin: 15px 0 35px;
+}
+
+h2 {
+    margin: 25px 0;
+}
+
+.timbres {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+button {
+    padding: 18px 25px;
+    background: #28243d;
+    color: white;
+    border: 1px solid #7656c9;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #7656c9;
+}
+
+#piano {
+    margin-top: 30px;
+    min-height: 180px;
+    background: #1d1b2c;
+    border-radius: 12px;
+}
+
+#piano {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: auto;
+    padding: 20px 10px;
+    min-height: 180px;
+}
+
+.branca {
+    position: relative;
+    flex: 0 0 45px;
+    height: 150px;
+    background: white;
+    color: #222;
+    border: 1px solid #aaa;
+    border-radius: 0 0 6px 6px;
+    padding: 0 0 12px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.branca:hover {
+    background: #ddd;
+}
+
+.preta {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 28px;
+    height: 95px;
+    margin-left: -14px;
+    margin-right: -14px;
+    background: #171725;
+    border: 1px solid #08080e;
+    border-radius: 0 0 5px 5px;
+    padding: 0;
+}
+
+.preta:hover {
+    background: #57418b;
+}
+
+.branca,
+.preta {
+    touch-action: none;
+    user-select: none;
+}
+
+.branca:active {
+    background: #c4b5fd;
+}
+
+.preta:active {
+    background: #7c3aed;
+}
+
+.controle-volume {
+    margin: 25px auto;
+    padding: 20px;
+    max-width: 400px;
+    background: #28243d;
+    border-radius: 12px;
+}
+
+.controle-volume label {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.controle-volume input {
+    width: 100%;
+    accent-color: #a78bfa;
+}
+
+.conexao-midi {
+    margin: 20px auto;
+    padding: 15px;
+    max-width: 400px;
+    background: #28243d;
+    border-radius: 12px;
+}
+
+#conectarMidi {
+    background: #166534;
+    border-color: #22c55e;
+}
+
+#statusMidi {
+    margin: 15px 0 0;
+    color: #c4b5fd;
+    font-size: 14px;
+}
+
+/* Layout para celulares */
+@media (max-width: 600px) {
+  body {
+    margin: 0;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .controle-volume,
+  .conexao-midi {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  button {
+    max-width: 100%;
+  }
+}
+
+/* Teclado virtual no celular */
+@media (max-width: 600px) {
+
+  #piano {
+    display: flex;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+    touch-action: pan-x;
+  }
+
+  #piano .branca {
+    flex-shrink: 0;
+    width: 44px;
+    height: 170px;
+  }
+
+  #piano .preta {
+    flex-shrink: 0;
+    width: 28px;
+    height: 105px;
+  }
+
+  #piano button {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}

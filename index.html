@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Worship Keys</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <main class="app">
+        <h1>🎹 Worship Keys</h1>
+        <p>Seu piano virtual para adoração</p>
+
+        <h2>Escolha seu timbre</h2>
+
+        <div class="timbres">
+            <button>Grand Piano</button>
+            <button>Worship Pad</button>
+            <button>Strings</button>
+            <button>Electric Piano</button>
+        </div>
+
+        <h2>Meu teclado</h2>
+
+      <button id="ativarAudio">
+    🔊 Ativar piano
+</button>
+
+      <div class="conexao-midi">
+    <button id="conectarMidi">
+        🎹 Conectar Yamaha
+          <button id="pararTudo" type="button">
+  🔇 Parar todos os sons
+</button>
+    </button>
+
+    <p id="statusMidi">
+        Nenhum teclado conectado
+    </p>
+</div>
+
+<!-- Volume do piano -->
+<div class="controle-volume">
+    <label for="volumePiano">
+        🎹 Volume do piano
+    </label>
+
+    <input
+        type="range"
+        id="volumePiano"
+        min="-40"
+        max="0"
+        value="-10"
+        step="1"
+    >
+</div>
+
+<!-- Volume do Pad -->
+<div class="controle-volume">
+    <label for="volumePad">
+        🌌 Volume do Worship Pad
+    </label>
+
+    <input
+        type="range"
+        id="volumePad"
+        min="-40"
+        max="0"
+        value="-6"
+        step="1" 
+    >
+
+    <label class="opcao-pad">
+        <input type="checkbox" id="ativarPad">
+        Ativar Worship Pad
+    </label>
+</div>
+
+<!-- Nosso teclado virtual -->
+<div id="piano"></div>
+    </main>
+
+    <script src="https://unpkg.com/tone@14.8.49/build/Tone.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
