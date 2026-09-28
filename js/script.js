@@ -28,7 +28,103 @@ const worshipPad = new Tone.PolySynth(
   }
 ).connect(reverbPad);
 
+// Timbre Warm Pad
+const warmPad = new Tone.PolySynth(
+  Tone.Synth,
+  {
+    oscillator: {
+      type: "triangle"
+    },
+
+    envelope: {
+      attack: 2.5,
+      decay: 1,
+      sustain: 0.75,
+      release: 5
+    }
+  }
+).connect(reverbPad);
+
+// Timbre Atmospheric Pad
+const atmosphericPad = new Tone.PolySynth(
+  Tone.Synth,
+  {
+    oscillator: {
+      type: "sine",
+      count: 4,
+      spread: 25
+    },
+
+    envelope: {
+      attack: 3.5,
+      decay: 1.5,
+      sustain: 0.8,
+      release: 7
+    }
+  }
+).connect(reverbPad);
+
+// Timbre Ambient Pad
+const ambientPad = new Tone.PolySynth(
+  Tone.Synth,
+  {
+    oscillator: {
+      type: "sine4",
+      count: 5,
+      spread: 35
+    },
+
+    envelope: {
+      attack: 4,
+      decay: 2,
+      sustain: 0.7,
+      release: 8
+    }
+  }
+).connect(reverbPad);
+
+// Timbre Strings
+const stringsPad = new Tone.PolySynth(
+  Tone.Synth,
+  {
+    oscillator: {
+      type: "sawtooth"
+    },
+
+    envelope: {
+      attack: 0.7,
+      decay: 0.4,
+      sustain: 0.9,
+      release: 2.5
+    }
+  }
+).connect(reverbPad);
+
 let padAtivado = false;
+
+const seletorPad = document.getElementById("timbrePad");
+
+let padAtual = worshipPad;
+
+seletorPad.addEventListener("change", () => {
+  worshipPad.releaseAll();
+  warmPad.releaseAll();
+  atmosphericPad.releaseAll();
+  ambientPad.releaseAll();
+  stringsPad.releaseAll();
+
+  if (seletorPad.value === "warm") {
+    padAtual = warmPad;
+  } else if (seletorPad.valeu === "atmospheric") {
+    padAtual = atmosphericPad;
+  } else if (seletorPad.valeu === "ambient") {
+    padAtual = ambientPad;
+  } else if (seletorPad.valeu === "strings") {
+    padAtual = stringsPad;
+  } else {
+    padAtual = worshipPad;
+  }
+});
 
 const notas = [
     { nome: "Dó", midi: 60, tipo: "branca" },
@@ -101,7 +197,7 @@ function tocarNota(midi) {
     grandPiano.triggerAttack(nota);
 
   if (padAtivado) {
-    worshipPad.triggerAttack(nota);
+    padAtual.triggerAttack(nota);
 }
 }
 
@@ -115,7 +211,7 @@ function pararNota(midi) {
     ).toNote();
 
     grandPiano.triggerRelease(nota);
-    worshipPad.triggerRelease(nota);
+    padAtual.triggerRelease(nota);
 }
 
 // Criar as teclas
@@ -312,38 +408,137 @@ const controleAtmosfera =
 const volumeAtmosfera =
   new Tone.Volume(-20).toDestination();
 
-const atmosfera = new Tone.Player({
+const fadeAtmosferaA =
+  new Tone.Gain(0).connect(volumeAtmosfera);
+
+const fadeAtmosferaB =
+  new Tone.Gain(0).connect(volumeAtmosfera);
+
+const atmosferaA = new Tone.Player({
   url: "sounds/pads/atmosfera.wav",
-  loop: true,
-  fadeIn: 1.5,
-  fadeOut: 1.5
-}).connect(volumeAtmosfera);
+  loop: false
+}).connect(fadeAtmosferaA);
+
+const atmosferaB = new Tone.Player({
+  url: "sounds/pads/atmosfera.wav",
+  loop: false
+}).connect(fadeAtmosferaB);
 
 let atmosferaLigada = false;
+let timerAtmosfera = null;
+let playerAtual = "A";
+
+const duracaoAtmosfera = 26;
+const crossfade = 4;
+
+function programarProximaAtmosfera() {
+
+  timerAtmosfera = setTimeout(() => {
+
+    if (!atmosferaLigada) return;
+
+    const agora = Tone.now();
+
+    if (playerAtual === "A") {
+
+      fadeAtmosferaB.gain.setValueAtTime(0, agora);
+      atmosferaB.start();
+
+      fadeAtmosferaB.gain.linearRampToValueAtTime(
+        1,
+        agora + crossfade
+      );
+
+      fadeAtmosferaA.gain.linearRampToValueAtTime(
+        0,
+        agora + crossfade
+      );
+
+      setTimeout(() => {
+        atmosferaA.stop();
+      }, crossfade * 1000);
+
+      playerAtual = "B";
+
+    } else {
+
+      fadeAtmosferaA.gain.setValueAtTime(0, agora);
+      atmosferaA.start();
+
+      fadeAtmosferaA.gain.linearRampToValueAtTime(
+        1,
+        agora + crossfade
+      );
+
+      fadeAtmosferaB.gain.linearRampToValueAtTime(
+        0,
+        agora + crossfade
+      );
+
+      setTimeout(() => {
+        atmosferaB.stop();
+      }, crossfade * 1000);
+
+      playerAtual = "A";
+    }
+
+    programarProximaAtmosfera();
+
+  }, (duracaoAtmosfera - crossfade) * 1000);
+}
 
 botaoAtmosfera.addEventListener("click", async () => {
-  try {
-    await Tone.start();
 
-    if (!atmosfera.loaded) {
-      botaoAtmosfera.textContent = "Carregando...";
-      await Tone.loaded();
-    }
+  try {
+
+    await Tone.start();
+    await Tone.loaded();
 
     if (atmosferaLigada) {
-      atmosfera.stop();
+
       atmosferaLigada = false;
-      botaoAtmosfera.textContent = "▶ Ativar atmosfera";
-    } else {
-      atmosfera.start();
-      atmosferaLigada = true;
-      botaoAtmosfera.textContent = "■ Desativar atmosfera";
+
+      clearTimeout(timerAtmosfera);
+
+      atmosferaA.stop();
+      atmosferaB.stop();
+
+      fadeAtmosferaA.gain.value = 0;
+      fadeAtmosferaB.gain.value = 0;
+
+      botaoAtmosfera.textContent =
+        "▶ Ativar atmosfera";
+
+      return;
     }
+
+    atmosferaLigada = true;
+    playerAtual = "A";
+
+    fadeAtmosferaA.gain.value = 0;
+    fadeAtmosferaB.gain.value = 0;
+
+    atmosferaA.start();
+
+    fadeAtmosferaA.gain.rampTo(1, 2);
+
+    botaoAtmosfera.textContent =
+      "■ Desativar atmosfera";
+
+    programarProximaAtmosfera();
+
   } catch (erro) {
-    console.error("Erro na atmosfera:", erro);
-    botaoAtmosfera.textContent = "Erro ao carregar áudio";
+
+    console.error(
+      "Erro na atmosfera:",
+      erro
+    );
+
+    botaoAtmosfera.textContent =
+      "Erro ao carregar áudio";
   }
 });
+
 
 controleAtmosfera.addEventListener("input", () => {
   volumeAtmosfera.volume.value =

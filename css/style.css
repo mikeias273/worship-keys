@@ -215,3 +215,31 @@ button:hover {
     -webkit-user-select: none;
   }
 }
+
+/* ===== SELETOR DE TIMBRE ===== */
+
+.seletor-timbre {
+  margin: 20px auto;
+  padding: 18px;
+  max-width: 400px;
+  background: #28243d;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.seletor-timbre label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+#timbrePad {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #6d5dfc;
+  background: #1e1b2e;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
