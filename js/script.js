@@ -245,8 +245,8 @@ function atualizarDispositivos() {
     const entradas = [...midiAccess.inputs.values()];
 
     if (entradas.length === 0) {
-        statusMidi.textContent =
-            "Conecte seu Yamaha pelo USB MIDI.";
+        statusMidi.textContent = "🔴 MIDI DESCONECTADO";
+        statusMidi.style.color = "#ff4d4d";
         return;
     }
 
@@ -258,12 +258,20 @@ function atualizarDispositivos() {
         "Conectado: " + entradas.map(
             entrada => entrada.name
         ).join(", ");
+    statusMidi.style.color = "#22c55e";
+    statusMidi.style.fontWeight = "bold";
 }
 
 function receberMidi(evento) {
     const [status, nota, velocidade] = evento.data;
 
     const comando = status & 0xF0;
+
+  if (comando === 0x90 && velocidade > 0) {
+  statusMidi.textContent = `🟢 MIDI RECEBIDO — Nota: ${nota}`;
+  statusMidi.style.color = "#22c55e";
+  statusMidi.style.fontWeight = "bold";
+}
 
     // Nota pressionada
     if (comando === 0x90 && velocidade > 0) {
