@@ -1,12 +1,20 @@
+Tone.setContext(
+    new Tone.Context({
+        latencyHint: "balanced"
+    })
+);
+
+Tone.getContext().lookAhead = 0.1;
+
 const piano = document.getElementById("piano");
 
 // Volume inicial mais suave
-const volumePad = new Tone.Volume(-18).toDestination();
+const volumePad = new Tone.Volume(-24).toDestination();
 
 // Reverb exclusivo do Pad
 const reverbPad = new Tone.Reverb({
   decay: 5,
-  wet: 0.35
+  wet: 0
 }).connect(volumePad);
 
 // Timbre Ambient Worship
@@ -14,19 +22,20 @@ const worshipPad = new Tone.PolySynth(
   Tone.Synth,
   {
     oscillator: {
-      type: "fatsine",
-      count: 3,
-      spread: 12
+      type: "sine"
     },
 
     envelope: {
       attack: 1.8,
       decay: 0.8,
       sustain: 0.65,
-      release: 4
+      release: 0.8
     }
   }
-).connect(reverbPad);
+).connect(volumePad);
+
+worshipPad.maxPolyphony = 6;
+
 
 // Timbre Warm Pad
 const warmPad = new Tone.PolySynth(
@@ -51,7 +60,7 @@ const atmosphericPad = new Tone.PolySynth(
   {
     oscillator: {
       type: "sine",
-      count: 4,
+      count: 2,
       spread: 25
     },
 
@@ -70,7 +79,7 @@ const ambientPad = new Tone.PolySynth(
   {
     oscillator: {
       type: "sine4",
-      count: 5,
+      count: 2,
       spread: 35
     },
 
@@ -100,6 +109,11 @@ const stringsPad = new Tone.PolySynth(
   }
 ).connect(reverbPad);
 
+warmPad.maxPolyphony = 6;
+atmosphericPad.maxPolyphony = 6;
+ambientPad.maxPolyphony = 6;
+stringsPad.maxPolyphony = 6;
+
 let padAtivado = false;
 
 const seletorPad = document.getElementById("timbrePad");
@@ -115,11 +129,11 @@ seletorPad.addEventListener("change", () => {
 
   if (seletorPad.value === "warm") {
     padAtual = warmPad;
-  } else if (seletorPad.valeu === "atmospheric") {
+  } else if (seletorPad.value === "atmospheric") {
     padAtual = atmosphericPad;
-  } else if (seletorPad.valeu === "ambient") {
+  } else if (seletorPad.value === "ambient") {
     padAtual = ambientPad;
-  } else if (seletorPad.valeu === "strings") {
+  } else if (seletorPad.value === "strings") {
     padAtual = stringsPad;
   } else {
     padAtual = worshipPad;
@@ -162,12 +176,71 @@ const grandPiano = new Tone.Sampler({
     baseUrl:
         "https://tonejs.github.io/audio/salamander/",
 
-    release: 1,
+    release: 0.35,
 
     onload: () => {
         console.log("Piano carregado!");
     }
+});
+
+// Som mais brilhante para o Bright Piano
+const brightEQ = new Tone.EQ3({
+    low: -2,
+    mid: 1,
+    high: 5
 }).connect(volumePiano);
+
+// Som mais suave para o Soft Piano
+const softEQ = new Tone.EQ3({
+    low: 2,
+    mid: 0,
+    high: -5
+}).connect(volumePiano);
+
+// Som suave e profundo para o Worship Piano
+const worshipEQ = new Tone.EQ3({
+    low: 2,
+    mid: -1,
+    high: -3
+}).connect(volumePiano);
+
+// Piano quente e encorpado para baladas 
+const balladEQ = new Tone.EQ3({
+  low: 3,
+  mid: 1,
+  high: -2
+}).connect(volumePiano);
+
+let pianoAtual = "grand";
+
+grandPiano.connect(volumePiano);
+
+const seletorPiano = document.getElementById("timbrePiano");
+
+seletorPiano.addEventListener("change", () => {
+    grandPiano.disconnect();
+
+    if (seletorPiano.value === "bright") {
+        grandPiano.connect(brightEQ);
+        pianoAtual = "bright";
+
+    } else if (seletorPiano.value === "solft") {
+        grandPiano.connect(softEQ);
+        pianoAtual = "solft";
+
+    } else if (seletorPiano.value === "worship") {
+        grandPiano.connect(worshipEQ);
+        pianoAtual = "worship";
+
+    } else if (seletorPiano.value === "ballad") {
+    grandPiano.connect(balladEQ);
+    pianoAtual = "ballad";
+
+  } else {
+    grandPiano.connect(volumePiano);
+    pianoAtual = "grand";
+  }
+});
 
 let audioIniciado = false;
 
@@ -211,10 +284,14 @@ function pararNota(midi) {
     ).toNote();
 
     grandPiano.triggerRelease(nota);
+
+  if (padAtivado) {
     padAtual.triggerRelease(nota);
+  }
 }
 
 // Criar as teclas
+const notasTelaAtivas = new Set();
 notas.forEach(nota => {
     const tecla = document.createElement("button");
 
@@ -238,22 +315,32 @@ notas.forEach(nota => {
         return;
     }
 
-    tocarNota(nota.midi);
+    if (!notasTelaAtivas.has(nota.midi)) {
+      notasTelaAtivas.add(nota.midi);
+      tocarNota(nota.midi);
+    }
 });
+
+  const soltarNota = () => {
+    if (!notasTelaAtivas.has(nota.midi)) return;
+
+    notasTelaAtivas.delete(nota.midi);
+    pararNota(nota.midi);
+};
 
     tecla.addEventListener(
         "pointerup",
-        () => pararNota(nota.midi)
+        soltarNota 
     );
 
     tecla.addEventListener(
         "pointercancel",
-        () => pararNota(nota.midi)
+        soltarNota 
     );
 
     tecla.addEventListener(
         "lostpointercapture",
-        () => pararNota(nota.midi)
+        soltarNota 
     );
 
     piano.appendChild(tecla);
