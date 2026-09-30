@@ -10,128 +10,284 @@
 </head>
 <body>
 
-    <main class="app">
-        <h1>🎹 Worship Keys</h1>
-        <p>Seu piano virtual para adoração</p>
+<main class="app studio">
 
-        <h2>Escolha seu timbre</h2>
-
-        <div class="timbres">
-            <button>Grand Piano</button>
-            <button>Worship Pad</button>
-            <button>Strings</button>
-            <button>Electric Piano</button>
+    <!-- CABEÇALHO -->
+    <header class="studio-header">
+        <div class="marca">
+            <span class="marca-icone">♫</span>
+            <div>
+                <h1>WORSHIP KEYS</h1>
+                <small>LIVE WORSHIP STUDIO</small>
+            </div>
         </div>
 
-        <h2>Meu teclado</h2>
+        <span class="studio-status">
+            ● LIVE SESSION
+        </span>
+    </header>
 
-      <button id="ativarAudio">
-    🔊 Ativar piano
-</button>
+    <!-- CONEXÃO E CONTROLES -->
+    <section class="barra-superior">
 
-      <div class="conexao-midi">
-    <button id="conectarMidi">
-        🎹 Conectar Yamaha
-          <button id="pararTudo" type="button">
-  🔇 Parar todos os sons
-</button>
-    </button>
+        <div class="painel-conexao">
+            <span class="titulo-painel">MIDI CONTROLLER</span>
 
-    <p id="statusMidi">
-        Nenhum teclado conectado
-    </p>
-</div>
+            <div class="botoes-conexao">
+                <button id="ativarAudio" type="button">
+                    🔊 Ativar áudio
+                </button>
 
-      <!-- Seletor de timbre do Piano -->
-<div class="seletor-timbre">
-    <label for="timbrePiano">🎹 Timbre do Piano</label>
+                <button id="conectarMidi" type="button">
+                    🎹 Conectar Yamaha
+                </button>
+            </div>
 
-    <select id="timbrePiano">
-        <option value="grand">Grand Piano</option>
-        <option value="bright">Bright Piano</option>
-        <option value="soft">Soft Piano</option>
-        <option value="worship">Worship Piano</option>
-        <option value="ballad">Ballad Piano</option> 
-    </select>
-</div>
+            <p id="statusMidi">
+                Nenhum teclado conectado
+            </p>
+        </div>
 
-<!-- Volume do piano -->
-<div class="controle-volume">
-    <label for="volumePiano">
-        🎹 Volume do piano
+        <div class="painel-master">
+            <span class="titulo-painel">MASTER CONTROL</span>
+
+            <button id="pararTudo" type="button">
+                ■ PARAR TODOS OS SONS
+            </button>
+        </div>
+
+    </section>
+
+    <!-- MIXER -->
+    <section class="secao-mixer">
+
+        <div class="secao-titulo">
+            <div>
+                <h2>Sound Mixer</h2>
+                <p>Controle seus instrumentos</p>
+            </div>
+            <span class="etiqueta">2 CHANNELS + ATMOSPHERE</span>
+        </div>
+
+        <div class="mixer">
+
+            <!-- CANAL PIANO -->
+            <article class="canal canal-piano">
+
+                <div class="canal-cabecalho">
+                    <span class="canal-numero">CH 01</span>
+                    <span class="canal-luz"></span>
+                </div>
+
+                <div class="canal-simbolo">🎹</div>
+
+                <h3>PIANO</h3>
+                <p class="canal-descricao">
+                    Main instrument
+                </p>
+
+                <div class="canal-controle">
+
+                    <div class="seletor-timbre">
+                        <label for="timbrePiano">
+                            SOUND PRESET
+                        </label>
+
+                        <select id="timbrePiano">
+                            <option value="grand">Grand Piano</option>
+                            <option value="bright">Bright Piano</option>
+                            <option value="soft">Soft Piano</option>
+                            <option value="worship">Worship Piano</option>
+                            <option value="ballad">Ballad Piano</option>
+                        </select>
+                    </div>
+
+                    <div class="controle-volume">
+                        <label for="volumePiano">
+                            CHANNEL VOLUME
+                        </label>
+
+                        <input
+                            type="range"
+                            id="volumePiano"
+                            min="-40"
+                            max="0"
+                            value="-10"
+                            step="1"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="canal-rodape">
+                    <span class="indicador indicador-azul"></span>
+                    PIANO ENGINE
+                </div>
+
+            </article>
+
+            <!-- CANAL PAD -->
+            <article class="canal canal-pad">
+
+                <div class="canal-cabecalho">
+                    <span class="canal-numero">CH 02</span>
+                    <span class="canal-luz"></span>
+                </div>
+
+                <div class="canal-simbolo">🌌</div>
+
+                <h3>WORSHIP PAD</h3>
+                <p class="canal-descricao">
+                    Ambient layers
+                </p>
+
+                <div class="canal-controle">
+
+                    <div class="seletor-timbre">
+                        <label for="timbrePad">
+                            SOUND PRESET
+                        </label>
+
+                        <select id="timbrePad">
+                            <option value="worship">Worship Pad</option>
+                            <option value="warm">Warm Pad</option>
+                            <option value="atmospheric">
+                                Atmospheric Pad
+                            </option>
+                            <option value="ambient">Ambient Pad</option>
+                            <option value="strings">Strings</option>
+                        </select>
+                    </div>
+
+                    <div class="controle-volume">
+                        <label for="volumePad">
+                            CHANNEL VOLUME
+                        </label>
+
+                        <input
+                            type="range"
+                            id="volumePad"
+                            min="-40"
+                            max="0"
+                            value="-6"
+                            step="1"
+                        >
+                    </div>
+
+                    <label class="opcao-pad">
+                        <input
+                            type="checkbox"
+                            id="ativarPad"
+                        >
+                        <span>Ativar Worship Pad</span>
+                    </label>
+              <!-- SUSTAIN AUTOMÁTICO DO PAD -->
+<div class="controle-sustain">
+
+    <label for="sustainPad">
+        🌌 Sustain do Pad
     </label>
+
+    <div class="sustain-valores">
+        <span>Curto</span>
+        <strong id="valorSustain">5s</strong>
+        <span>Longo</span>
+    </div>
 
     <input
         type="range"
-        id="volumePiano"
-        min="-40"
-        max="0"
-        value="-10"
+        id="sustainPad"
+        min="1"
+        max="10"
+        value="5"
         step="1"
     >
+
 </div>
 
-      <!-- Seletor de timbre do Pad -->
-<div class="seletor-timbre">
-  <label for="timbrePad">🌌 Timbre do Pad</label>
+                </div>
 
-  <select id="timbrePad">
-    <option value="worship">Worship Pad</option>
-    <option value="warm">Warm Pad</option>
-    <option value="atmospheric">Atmospheric Pad</option>
-    <option value="ambient">Ambient Pad</option>
-    <option value="strings">Strings</option>
-  </select>
-</div>
+                <div class="canal-rodape">
+                    <span class="indicador indicador-verde"></span>
+                    PAD ENGINE
+                </div>
 
-<!-- Volume do Pad -->
-<div class="controle-volume">
-    <label for="volumePad">
-        🌌 Volume do Worship Pad
-    </label>
+            </article>
 
-    <input
-        type="range"
-        id="volumePad"
-        min="-40"
-        max="0"
-        value="-6"
-        step="1" 
-    >
+            <!-- CANAL ATMOSFERA -->
+            <article class="canal canal-atmosfera">
 
-    <label class="opcao-pad">
-        <input type="checkbox" id="ativarPad">
-        Ativar Worship Pad
-    </label>
-</div>
+                <div class="canal-cabecalho">
+                    <span class="canal-numero">FX 01</span>
+                    <span class="canal-luz"></span>
+                </div>
 
-<!-- Nosso teclado virtual -->
-<div id="piano"></div>
+                <div class="canal-simbolo">✨</div>
+
+                <h3>ATMOSPHERE</h3>
+                <p class="canal-descricao">
+                    Background ambience
+                </p>
+
+                <div class="canal-controle controle-atmosfera">
+
+                    <button
+                        id="ativarAtmosfera"
+                        type="button"
+                    >
+                        ▶ Ativar atmosfera
+                    </button>
+
+                    <div class="controle-volume">
+                        <label for="volumeAtmosfera">
+                            EFFECT VOLUME
+                        </label>
+
+                        <input
+                            id="volumeAtmosfera"
+                            type="range"
+                            min="-60"
+                            max="0"
+                            value="-20"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="canal-rodape">
+                    <span class="indicador indicador-roxo"></span>
+                    AMBIENT ENGINE
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- TECLADO VIRTUAL -->
+    <section class="secao-teclado">
+
+        <div class="secao-titulo">
+            <div>
+                <h2>Virtual Keyboard</h2>
+                <p>Toque e experimente seus timbres</p>
+            </div>
+            <span class="etiqueta">KEYBOARD</span>
+        </div>
+
+        <div class="teclado-container">
+            <div id="piano"></div>
+        </div>
+
+    </section>
+
+    <footer class="studio-footer">
+        WORSHIP KEYS • LIVE WORSHIP STUDIO
+    </footer>
 
 </main>
 
-<!-- NOVO CONTROLE DA ATMOSFERA -->
-<div class="controle-atmosfera">
-  <h3>🌌 Ambient Atmosphere</h3>
-
-  <button id="ativarAtmosfera" type="button">
-    ▶ Ativar atmosfera
-  </button>
-
-  <label for="volumeAtmosfera">
-    Volume da atmosfera
-  </label>
-
-  <input
-    id="volumeAtmosfera"
-    type="range"
-    min="-60"
-    max="0"
-    value="-20"
-  >
-</div>
-
-<!-- MANTENHA OS DOIS SCRIPTS QUE JÁ EXISTEM -->
 <script src="https://unpkg.com/tone@14.8.49/build/Tone.js"></script>
 <script src="js/script.js"></script>
 

@@ -243,3 +243,553 @@ button:hover {
   font-size: 15px;
   cursor: pointer;
 }
+
+/* NOVA INTERFACE WORSHIP KEYS */
+
+body {
+    background: #11121c;
+    color: #f1f1f7;
+}
+
+.app {
+    width: 96%;
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #1d2030;
+    border: 1px solid #363b55;
+    border-radius: 18px;
+    box-sizing: border-box;
+}
+
+#piano {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* =====================================
+   WORSHIP KEYS - STUDIO INTERFACE
+===================================== */
+
+body {
+    margin: 0;
+    background: #101118;
+    color: #f3f4fa;
+    font-family: Arial, sans-serif;
+}
+
+.app.studio {
+    width: min(96%, 1250px);
+    max-width: 1250px;
+    margin: 24px auto;
+    padding: 0;
+    background: #191c29;
+    border: 1px solid #33384d;
+    border-radius: 18px;
+    overflow: hidden;
+    box-sizing: border-box;
+    box-shadow: 0 20px 60px #0005;
+}
+
+.studio-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 22px;
+    background: #222638;
+    border-bottom: 1px solid #373c52;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.marca-icone {
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    background: #414a77;
+    border-radius: 12px;
+    font-size: 24px;
+}
+
+.studio .marca h1 {
+    margin: 0;
+    font-size: 19px;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.marca small {
+    color: #9ca7c7;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.studio-status {
+    color: #75e0aa;
+    font-size: 11px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.barra-superior {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 15px;
+    padding: 20px;
+}
+
+.painel-conexao,
+.painel-master {
+    padding: 17px;
+    background: #252a3b;
+    border: 1px solid #383f58;
+    border-radius: 12px;
+}
+
+.titulo-painel {
+    display: block;
+    margin-bottom: 13px;
+    color: #aab4d1;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.botoes-conexao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.studio button {
+    padding: 12px 15px;
+    background: #363f5d;
+    color: #fff;
+    border: 1px solid #57648d;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.studio button:hover {
+    background: #49577d;
+}
+
+.studio #conectarMidi {
+    background: #285747;
+    border-color: #428f70;
+}
+
+.studio #pararTudo {
+    width: 100%;
+    background: #623642;
+    border-color: #ad5669;
+}
+
+.studio #statusMidi {
+    margin: 13px 0 0;
+    color: #abb8d2;
+    font-size: 12px;
+}
+
+.secao-mixer,
+.secao-teclado {
+    padding: 10px 20px 22px;
+}
+
+.secao-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.studio .secao-titulo h2 {
+    margin: 0 0 5px;
+    color: #f4f5ff;
+    font-size: 21px;
+}
+
+.secao-titulo p {
+    margin: 0;
+    color: #919bb8;
+    font-size: 12px;
+}
+
+.etiqueta {
+    color: #9da9c9;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.mixer {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.canal {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 360px;
+    padding: 17px;
+    background: linear-gradient(
+        180deg,
+        #30364a,
+        #222636
+    );
+    border: 1px solid #454c65;
+    border-radius: 13px;
+    box-sizing: border-box;
+}
+
+.canal-piano {
+    border-top: 3px solid #e5a452;
+}
+
+.canal-pad {
+    border-top: 3px solid #58bd92;
+}
+
+.canal-atmosfera {
+    border-top: 3px solid #a27de6;
+}
+
+.canal-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.canal-numero {
+    color: #aab4cd;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.canal-luz {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #7a829c;
+}
+
+.canal-simbolo {
+    margin: 22px 0 8px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.studio .canal h3 {
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+}
+
+.canal-descricao {
+    margin: 8px 0 23px;
+    color: #a1abc6;
+    font-size: 11px;
+    text-align: center;
+}
+
+.canal-controle {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.studio .seletor-timbre,
+.studio .controle-volume {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+
+.studio .canal label:not(.opcao-pad) {
+    display: block;
+    margin-bottom: 10px;
+    color: #b7c1db;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.studio select {
+    width: 100%;
+    padding: 12px 8px;
+    background: #191e2e;
+    color: #f5f5ff;
+    border: 1px solid #4d5878;
+    border-radius: 8px;
+    font-size: 12px;
+    box-sizing: border-box;
+}
+
+.studio input[type="range"] {
+    display: block;
+    width: 100%;
+    margin: 12px 0;
+    accent-color: #a8b8f4;
+    box-sizing: border-box;
+}
+
+.studio .opcao-pad {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 8px;
+    background: #202d35;
+    border: 1px solid #426554;
+    border-radius: 8px;
+    color: #c6f3d8;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.studio .opcao-pad input {
+    accent-color: #61d59b;
+}
+
+.studio .controle-atmosfera {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+.studio #ativarAtmosfera {
+    width: 100%;
+    background: #544173;
+    border-color: #8066ae;
+}
+
+.canal-rodape {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding-top: 13px;
+    border-top: 1px solid #444a61;
+    color: #9ca8c4;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.indicador {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.indicador-azul {
+    background: #e5a452;
+}
+
+.indicador-verde {
+    background: #58bd92;
+}
+
+.indicador-roxo {
+    background: #a27de6;
+}
+
+.secao-teclado {
+    border-top: 1px solid #363c53;
+    background: #202536;
+    padding-top: 20px;
+}
+
+.teclado-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 15px 0;
+    background: #171b28;
+    border: 1px solid #353c56;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+.studio #piano {
+    width: max-content;
+    min-width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    overflow: visible;
+    background: transparent;
+}
+
+.studio-footer {
+    padding: 17px;
+    background: #171a27;
+    color: #77829e;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+/* CELULAR */
+
+@media (max-width: 700px) {
+
+    .app.studio {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .studio-header {
+        padding: 16px;
+    }
+
+    .studio .marca h1 {
+        font-size: 15px;
+    }
+
+    .barra-superior {
+        grid-template-columns: 1fr;
+        padding: 12px;
+    }
+
+    .secao-mixer,
+    .secao-teclado {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .mixer {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 12px;
+    }
+
+    .canal {
+        flex: 0 0 230px;
+        scroll-snap-align: start;
+    }
+
+    .etiqueta {
+        display: none;
+    }
+
+}
+
+/* AJUSTE DO TECLADO VIRTUAL */
+
+.studio .teclado-container {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 25px 10px;
+}
+
+.studio #piano {
+    transform: scale(1.3);
+    transform-origin: center;
+    margin: 25px auto;
+}
+
+/* Esconder botão temporário de testes */
+
+body > button {
+    display: none;
+}
+
+/* Evita a barra horizontal do teclado */
+#piano {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Teclas brancas */
+#piano .branca {
+    background: linear-gradient(#ffffff, #dce3ed);
+    color: #172033;
+    border: 1px solid #aeb8c7;
+}
+
+/* Teclas pretas */
+#piano .preta {
+    background: linear-gradient(#303747, #080b12);
+    color: white;
+    border: 1px solid #05070c;
+}
+
+/* ILUMINAÇÃO DAS TECLAS */
+
+/* Tecla branca pressionada */
+#piano .branca.pressionada {
+    background: linear-gradient(
+        to bottom,
+        #93c5fd,
+        #2563eb
+    );
+
+    box-shadow: 0 0 20px #3b82f6;
+    border-color: #60a5fa;
+}
+
+/* Tecla preta pressionada */
+#piano .preta.pressionada {
+    background: linear-gradient(
+        to bottom,
+        #60a5fa,
+        #1d4ed8
+    );
+
+    box-shadow: 0 0 18px #2563eb;
+    border-color: #93c5fd;
+}
+
+/* CONTROLE DE SUSTAIN */
+
+.controle-sustain {
+    padding: 14px;
+    background: #1b2435;
+    border: 1px solid #475575;
+    border-radius: 10px;
+}
+
+.controle-sustain label {
+    display: block;
+    margin-bottom: 12px;
+    color: #c4d5ff;
+    font-size: 12px;
+}
+
+.sustain-valores {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 11px;
+    color: #aebbd7;
+}
+
+.sustain-valores strong {
+    color: #80b8ff;
+    font-size: 20px;
+}
+
+.controle-sustain input {
+    width: 100%;
+    accent-color: #60a5fa;
+}

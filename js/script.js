@@ -17,6 +17,12 @@ const reverbPad = new Tone.Reverb({
   wet: 0
 }).connect(volumePad);
 
+reverbPad.ready.then(() => {
+    console.log("Reverb do Pad carregado!");
+}).catch(erro => {
+    console.error("Erro no Reverb:", erro);
+});
+
 // Timbre Ambient Worship
 const worshipPad = new Tone.PolySynth(
   Tone.Synth,
@@ -29,10 +35,12 @@ const worshipPad = new Tone.PolySynth(
       attack: 1.8,
       decay: 0.8,
       sustain: 0.65,
-      release: 0.8
+      release: 5 
     }
   }
 ).connect(volumePad);
+
+
 
 worshipPad.maxPolyphony = 6;
 
@@ -52,7 +60,7 @@ const warmPad = new Tone.PolySynth(
       release: 5
     }
   }
-).connect(reverbPad);
+).connect(volumePad);
 
 // Timbre Atmospheric Pad
 const atmosphericPad = new Tone.PolySynth(
@@ -71,7 +79,7 @@ const atmosphericPad = new Tone.PolySynth(
       release: 7
     }
   }
-).connect(reverbPad);
+).connect(volumePad);
 
 // Timbre Ambient Pad
 const ambientPad = new Tone.PolySynth(
@@ -90,7 +98,7 @@ const ambientPad = new Tone.PolySynth(
       release: 8
     }
   }
-).connect(reverbPad);
+).connect(volumePad);
 
 // Timbre Strings
 const stringsPad = new Tone.PolySynth(
@@ -107,7 +115,7 @@ const stringsPad = new Tone.PolySynth(
       release: 2.5
     }
   }
-).connect(reverbPad);
+).connect(volumePad);
 
 warmPad.maxPolyphony = 6;
 atmosphericPad.maxPolyphony = 6;
@@ -119,6 +127,30 @@ let padAtivado = false;
 const seletorPad = document.getElementById("timbrePad");
 
 let padAtual = worshipPad;
+
+// CONTROLE DE SUSTAIN DOS PADS
+const sustainPad = document.getElementById("sustainPad");
+const valorSustain = document.getElementById("valorSustain");
+
+sustainPad.addEventListener("input", () => {
+    const tempo = Number(sustainPad.value);
+
+    [
+        worshipPad,
+        warmPad,
+        atmosphericPad,
+        ambientPad,
+        stringsPad
+    ].forEach(pad => {
+        pad.set({
+            envelope: {
+                release: tempo
+            }
+        });
+    });
+
+    valorSustain.textContent = `${tempo}s`;
+});
 
 seletorPad.addEventListener("change", () => {
   worshipPad.releaseAll();
@@ -296,6 +328,7 @@ notas.forEach(nota => {
     const tecla = document.createElement("button");
 
     tecla.className = nota.tipo;
+    tecla.dataset.midi = nota.midi;
 
     tecla.textContent =
         nota.tipo === "branca" ? nota.nome : "";
@@ -318,6 +351,8 @@ notas.forEach(nota => {
     if (!notasTelaAtivas.has(nota.midi)) {
       notasTelaAtivas.add(nota.midi);
       tocarNota(nota.midi);
+
+      tecla.classList.add("pressionada");
     }
 });
 
@@ -326,6 +361,8 @@ notas.forEach(nota => {
 
     notasTelaAtivas.delete(nota.midi);
     pararNota(nota.midi);
+
+    tecla.classList.remove("pressionada");
 };
 
     tecla.addEventListener(
@@ -363,20 +400,6 @@ controleVolume.addEventListener("input", () => {
     volumePiano.volume.value = Number(controleVolume.value);
 });
 
-const testePad = document.createElement("button");
-
-testePad.textContent = "🎹 Testar Pad";
-
-testePad.addEventListener("click", async () => {
-    await iniciarAudio();
-
-    worshipPad.triggerAttackRelease(
-        ["C4", "E4", "G4"],
-        5
-    );
-});
-
-document.querySelector(".app").appendChild(testePad);
 
 const controlePad = document.getElementById("volumePad");
 const botaoPad = document.getElementById("ativarPad");
@@ -461,6 +484,8 @@ function receberMidi(evento) {
         if (!notasMidiAtivas.has(nota)) {
             notasMidiAtivas.add(nota);
             tocarNota(nota);
+      document.querySelectorAll(`#piano [data-midi="${nota}"]`)
+  .forEach(tecla => tecla.classList.add("pressionada"));
         }
     }
 
@@ -471,6 +496,8 @@ function receberMidi(evento) {
     ) {
         notasMidiAtivas.delete(nota);
         pararNota(nota);
+    document.querySelectorAll(`#piano [data-midi="${nota}"]`)
+  .forEach(tecla => tecla.classList.remove("pressionada"));
     }
 }
 
