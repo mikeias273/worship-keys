@@ -282,6 +282,10 @@ async function iniciarAudio() {
     try {
         await Tone.start();
 
+    console.log("Sample rate:", Tone.getContext().rawContext.sampleRate);
+    console.log("Base latency:", Tone.getContext().rawContext.baseLatency);
+    console.log("Output latency:", Tone.getContext().rawContext.outputLatency);
+
         audioIniciado = true;
 
         console.log("Áudio liberado!");
@@ -294,10 +298,7 @@ async function iniciarAudio() {
 function tocarNota(midi) {
     if (!grandPiano.loaded) return;
 
-    const nota = Tone.Frequency(
-        midi,
-        "midi"
-    ).toNote();
+    const nota = Tone.Frequency(midi, "midi");
 
     grandPiano.triggerAttack(nota);
 
@@ -310,10 +311,7 @@ function tocarNota(midi) {
 function pararNota(midi) {
     if (!grandPiano.loaded) return;
 
-    const nota = Tone.Frequency(
-        midi,
-        "midi"
-    ).toNote();
+    const nota = Tone.Frequency(midi, "midi");
 
     grandPiano.triggerRelease(nota);
 
