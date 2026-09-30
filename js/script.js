@@ -484,8 +484,8 @@ function receberMidi(evento) {
         if (!notasMidiAtivas.has(nota)) {
             notasMidiAtivas.add(nota);
             tocarNota(nota);
-      document.querySelectorAll(`#piano [data-midi="${nota}"]`)
-  .forEach(tecla => tecla.classList.add("pressionada"));
+      //document.querySelectorAll(`#piano [data-midi="${nota}"]`)
+  //.forEach(tecla => tecla.classList.add("pressionada"));
         }
     }
 
@@ -496,8 +496,8 @@ function receberMidi(evento) {
     ) {
         notasMidiAtivas.delete(nota);
         pararNota(nota);
-    document.querySelectorAll(`#piano [data-midi="${nota}"]`)
-  .forEach(tecla => tecla.classList.remove("pressionada"));
+    //document.querySelectorAll(`#piano [data-midi="${nota}"]`)
+  //.forEach(tecla => tecla.classList.remove("pressionada"));
     }
 }
 
